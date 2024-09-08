@@ -27,8 +27,8 @@ bool drawTree(vec2 uv,vec2 position,float scale){
     vec2 p5=vec2(-.2,-.18);// Left vertex of bottom triangle
     vec2 p6=vec2(.2,-.18);// Right vertex of bottom triangle
     
-    vec2 trunk_p0=vec2(-.03,-.35);// Bottom left of trunk
-    vec2 trunk_p1=vec2(.03,-.122);// Top right of trunk
+    vec2 trunk_p0=vec2(-.03,-.26);// Bottom left of trunk
+    vec2 trunk_p1=vec2(.03,-.1);// Top right of trunk
     
     float edge_top_1=edge(uv,p0,p1);// Left top
     float edge_top_3=edge(uv,p2,p0);// Right top
@@ -66,10 +66,18 @@ float perlinNoise(float x,float seed){
 
 float mountainCurve(float x,float x_s,float y_s,float x_offset,float y_offset,float seed){
     float scaledX=(x-x_offset)*x_s;
-    float base=pow(sin(scaledX*8.)*.75+.6,2.);
+    float base=pow(sin(scaledX*8.)*.5+.5,2.);
     float noiseValue=perlinNoise(scaledX*10.,seed)*.2;
     return base*y_s+noiseValue+y_offset;
 }
+
+float riverCurve(float x,float x_s,float y_s,float x_offset,float y_offset,float seed){
+    float scaledX=(x-x_offset)*x_s;
+    float noiseValue=perlinNoise(scaledX*10.,seed)*.01;
+    float base=pow(sin(scaledX*8. * fract(x))*.5+.5,2.);
+    return base*y_s+noiseValue+y_offset;
+}
+
 void main(){
     vec2 uv=gl_FragCoord.xy/u_resolution.xy;
     
@@ -80,14 +88,18 @@ void main(){
     vec3 very_dark_grey_blue=vec3(30,50,63)/255.;
     vec3 dark_grey_blue=vec3(70,108,133)/255.;
     
-    float y=mountainCurve(uv.x,1.6,.08,.3,.5,1.);
+    float y=mountainCurve(uv.x,2.6,.08,.3,.7,1.);
     if(uv.y<y)color=grey_blue_light;
     
-    float y2=mountainCurve(uv.x,1.7,.1,.3,.4,1.7);
+    float y2=mountainCurve(uv.x,2.7,.1,.3,.6,1.7);
     if(uv.y<y2)color=grey_blue;
     
-    // Tree 1 (left)
-    
+    float xx = riverCurve(uv.y, 5.4, .1, .199, .4, 9.);
+    float xx2 = riverCurve(uv.y, 6., .18, .66, .17, 233.);
+
+    if(uv.x > xx && uv.y < 0.5) color = vec3(1.0);
+    if(uv.x < xx2 && uv.y < 0.5) color = vec3(1.0);
+
     if(drawTree(uv,vec2(.6,.50),.35)){
         color=very_dark_grey_blue;
     }
@@ -99,10 +111,10 @@ void main(){
         color=very_dark_grey_blue;
     }
     // Tree 3 (left)
-    if(drawTree(uv,vec2(.7,.4),.47)){
+    if(drawTree(uv,vec2(.58,.4),.47)){
         color=very_dark_grey_blue;
     }
-    if(drawTree(uv,vec2(.68,.4),.51)){
+    if(drawTree(uv,vec2(.56,.4),.51)){
         color=dark_grey_blue;
     }
     // Tree 4
@@ -126,10 +138,10 @@ void main(){
         color=dark_grey_blue;
     }
     // Tree 6 (left)
-    if(drawTree(uv,vec2(.79,.30),.56)){
+    if(drawTree(uv,vec2(.62,.25),.56)){
         color=very_dark_grey_blue;
     }
-    if(drawTree(uv,vec2(.77,.30),.60)){
+    if(drawTree(uv,vec2(.60,.5),.60)){
         color=dark_grey_blue;
     }
 
@@ -140,5 +152,7 @@ void main(){
     if(drawTree(uv,vec2(.41,.50),.3)){
         color=dark_grey_blue;
     }
+    // image ratio around 1000 x 700
+    if(uv.x > 0.71) color = vec3(1.0);
     gl_FragColor=vec4(color,1.);
 }

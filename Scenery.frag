@@ -141,7 +141,7 @@ void main(){
     if(drawTree(uv,vec2(.62,.25),.56)){
         color=very_dark_grey_blue;
     }
-    if(drawTree(uv,vec2(.60,.5),.60)){
+    if(drawTree(uv,vec2(.60,.25),.60)){
         color=dark_grey_blue;
     }
 

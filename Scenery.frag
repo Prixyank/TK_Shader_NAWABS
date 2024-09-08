@@ -86,24 +86,58 @@ void main(){
     float y2=mountainCurve(uv.x,1.7,.1,.3,.4,1.7);
     if(uv.y<y2)color=grey_blue;
     
-    // Tree 1
-    if(drawTree(uv,vec2(.7,.50),.35)){
+    // Tree 1 (left)
+    
+    if(drawTree(uv,vec2(.6,.50),.35)){
+        color=very_dark_grey_blue;
+    }
+    if(drawTree(uv,vec2(.58,.50),.39)){
         color=dark_grey_blue*1.2;
     }
     // Tree 2
     if(drawTree(uv,vec2(.3,.5),0.4)){
         color=very_dark_grey_blue;
     }
-    // Tree 3
-    if(drawTree(uv,vec2(.82,.4),.45)){
+    // Tree 3 (left)
+    if(drawTree(uv,vec2(.7,.4),.47)){
+        color=very_dark_grey_blue;
+    }
+    if(drawTree(uv,vec2(.68,.4),.51)){
         color=dark_grey_blue;
     }
     // Tree 4
-    if(drawTree(uv,vec2(.21,.4),.5)){
+    if(drawTree(uv,vec2(.28,.5),.46)){
         color=dark_grey_blue;
     }
     // Tree 5
-    if(drawTree(uv,vec2(.12,.27),.62)){
+    
+    if(drawTree(uv,vec2(.22,.38),.56)){
+        color=very_dark_grey_blue;
+    }
+    if(drawTree(uv,vec2(.2,.38),.60)){
+        color=dark_grey_blue;
+    }
+
+    // Tree 6 (right)
+    if(drawTree(uv,vec2(.15,.23),.60)){
+        color=very_dark_grey_blue;
+    }
+    if(drawTree(uv,vec2(.13,.23),.64)){
+        color=dark_grey_blue;
+    }
+    // Tree 6 (left)
+    if(drawTree(uv,vec2(.79,.30),.56)){
+        color=very_dark_grey_blue;
+    }
+    if(drawTree(uv,vec2(.77,.30),.60)){
+        color=dark_grey_blue;
+    }
+
+    // Tree center
+    if(drawTree(uv,vec2(.43,.50),.26)){
+        color=very_dark_grey_blue;
+    }
+    if(drawTree(uv,vec2(.41,.50),.3)){
         color=dark_grey_blue;
     }
     gl_FragColor=vec4(color,1.);

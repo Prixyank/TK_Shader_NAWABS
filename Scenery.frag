@@ -77,6 +77,11 @@ float riverCurve(float x,float x_s,float y_s,float x_offset,float y_offset,float
     float base=pow(sin(scaledX*8. * fract(x))*.5+.5,2.);
     return base*y_s+noiseValue+y_offset;
 }
+bool lineEffect(float yPos,float yCurve,float threshold){
+    float distanceToCurve=abs(yPos-yCurve);
+    return(distanceToCurve<threshold);
+}
+
 
 void main(){
     vec2 uv=gl_FragCoord.xy/u_resolution.xy;
@@ -101,6 +106,7 @@ void main(){
     if(uv.x < xx2 && uv.y < 0.5) color = vec3(1.0);
 
     if(drawTree(uv,vec2(.6,.50),.35)){
+        
         color=very_dark_grey_blue;
     }
     if(drawTree(uv,vec2(.58,.50),.39)){
